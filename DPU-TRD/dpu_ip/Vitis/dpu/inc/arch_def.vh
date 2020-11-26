@@ -1,50 +1,18 @@
-///////////////////////////////////////////////////////////////
-// (c) Copyright 2018-2019 Xilinx, Inc. All rights reserved.   
-//                                                             
-// This file contains confidential and proprietary information 
-// of Xilinx, Inc. and is protected under U.S. and             
-// international copyright and other intellectual property     
-// laws.                                                       
-//                                                             
-// DISCLAIMER                                                  
-// This disclaimer is not a license and does not grant any     
-// rights to the materials distributed herewith. Except as     
-// otherwise provided in a valid license issued to you by      
-// Xilinx, and to the maximum extent permitted by applicable   
-// law: (1) THESE MATERIALS ARE MADE AVAILABLE "AS IS" AND     
-// WITH ALL FAULTS, AND XILINX HEREBY DISCLAIMS ALL WARRANTIES 
-// AND CONDITIONS, EXPRESS, IMPLIED, OR STATUTORY, INCLUDING   
-// BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, NON-      
-// INFRINGEMENT, OR FITNESS FOR ANY PARTICULAR PURPOSE; and    
-// (2) Xilinx shall not be liable (whether in contract or tort,
-// including negligence, or under any other theory of          
-// liability) for any loss or damage of any kind or nature     
-// related to, arising under or in connection with these       
-// materials, including for any direct, or any indirect,       
-// special, incidental, or consequential loss or damage        
-// (including loss of data, profits, goodwill, or any type of  
-// loss or damage suffered as a result of any action brought   
-// by a third party) even if such damage or loss was           
-// reasonably foreseeable or Xilinx had been advised of the    
-// possibility of the same.                                    
-//                                                             
-// CRITICAL APPLICATIONS                                       
-// Xilinx products are not designed or intended to be fail-    
-// safe, or for use in any application requiring fail-safe     
-// performance, such as life-support or safety devices or      
-// systems, Class III medical devices, nuclear facilities,     
-// applications related to the deployment of airbags, or any   
-// other applications that could lead to death, personal       
-// injury, or severe property or environmental damage          
-// (individually and collectively, "Critical                   
-// Applications"). Customer assumes the sole risk and          
-// liability of any use of Xilinx products in Critical         
-// Applications, subject only to applicable laws and           
-// regulations governing limitations on product liability.     
-//                                                             
-// THIS COPYRIGHT NOTICE AND DISCLAIMER MUST BE RETAINED AS    
-// PART OF THIS FILE AT ALL TIMES.                             
-///////////////////////////////////////////////////////////////
+/*                                                                         
+* Copyright 2019 Xilinx Inc.                                               
+*                                                                          
+* Licensed under the Apache License, Version 2.0 (the "License");          
+* you may not use this file except in compliance with the License.         
+* You may obtain a copy of the License at                                  
+*                                                                          
+*    http://www.apache.org/licenses/LICENSE-2.0                            
+*                                                                          
+* Unless required by applicable law or agreed to in writing, software      
+* distributed under the License is distributed on an "AS IS" BASIS,        
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+* See the License for the specific language governing permissions and      
+* limitations under the License.                                           
+*/                                                                         
 
 `pragma protect begin_protected
 `pragma protect version = 2
@@ -59,11 +27,11 @@
 `pragma protect begin_toolblock
 `pragma protect rights_digest_method="sha256"
 `pragma protect key_keyowner = "Xilinx", key_keyname= "xilinx_2016_05", key_method = "rsa", key_block
-aB5EHAkrB6NT/NTMoBINikqg8EwKYDaK54FjPax2CptnClXJaFSk1P6Y/9u3FWJjIsff+dSOe3bi
-iAx0iPp0pZj8xWoo7D2kuRg+plJgYo3eEH77LyOgJ8X7XStkvgjstpA8MmqOdtjObA2+nWfOXV+w
-qbssx3RmnSBBdhARD6rqOFwTf7/3cDuK7QTo3GD8GmkOY+DCob0TXNl7kc1BlYaNbdaJok+U9OEg
-YjjGCk5uikHjY6JmbT5Bd71P+OPQhQWHoUBkHUIrhbxZIfDop7LhnylOAsOUmH6p7xY7O9pS50TQ
-NpvG9Wsvg8pUSyb0Hyecew+1A6TcJyANzCU7xg==
+CR8vN7aeY7nINHWPNvDhzNAFV3POF2m+Umve/RSJdDqbu2DD1qCR0b7tuobi5FAPK8vfUyAJUYu3
+l+3ZWDR23JET9/rBZPLwkripeRbhSFx7V7Ay+DfHaFILsLqukoBS3vJkccQgKvRWLLfEyBnXH6VQ
+ASSrGa9RoA8qyZY/WyjpDo+bZYsNB7LibB9NVDWOfoxMbxWHmhgbErQgcylB4CVTW6woyBagUfvn
+V8iVobc29wSDami3N8wLtEFc3B6nU/jZGDk2aBW3I9BBlp1JFda/WszLSW3u6fRFmQUrHPlf3J5g
+S3ZgcJXb03QC/4pEQz8tP/OHwJYEkRJEXy6bTg==
 
 `pragma protect control xilinx_configuration_visible = "false"
 `pragma protect control xilinx_enable_modification = "false"
@@ -71,62 +39,62 @@ NpvG9Wsvg8pUSyb0Hyecew+1A6TcJyANzCU7xg==
 `pragma protect control xilinx_enable_netlist_export = "false"
 `pragma protect control xilinx_enable_bitstream = "true"
 `pragma protect control decryption=(xilinx_activity==simulation) ? "false" : "true"
-`pragma protect end_toolblock="MxahWTeDMTwz2fyFkxR0OEw6OdcfpBcLNutRaEfsJI4="
+`pragma protect end_toolblock="iPWB71lZBSBUV8roxtJFE+uCtSOVKBCX+U4s9IB1WWY="
 `pragma protect data_method = "AES128-CBC"
-`pragma protect encoding = (enctype = "BASE64", line_length = 76, bytes = 2944)
+`pragma protect encoding = (enctype = "BASE64", line_length = 76, bytes = 2928)
 `pragma protect data_block
-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
+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
+4BancZfAB0i+uEOOocFI3HQXT21T
 `pragma protect end_protected
 
-// 41d051e7f991c9dacbe8d368b85f57380b272bd2d7dc26e6c472a2d06e70908e
+// 

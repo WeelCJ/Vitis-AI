@@ -1,9 +1,9 @@
 # Copyright 2019 Xilinx Inc.
-#
+# 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-#
+# 
 #     http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
@@ -34,7 +34,7 @@ def substitute(File,Replacee,Replacement):
 """
 
 models = [
-  "https://www.xilinx.com/bin/public/openDownload?filename=models.container.caffe.bvlc_googlenet_2019-05-02_12_32.zip",
+   "https://www.xilinx.com/bin/public/openDownload?filename=models.container.caffe.bvlc_googlenet_2019-05-02_12_32.zip",
    "https://www.xilinx.com/bin/public/openDownload?filename=models.container.caffe.inception_v2_2019-05-02_12_32.zip",
    "https://www.xilinx.com/bin/public/openDownload?filename=models.container.caffe.inception_v3_2019-05-02_12_32.zip",
    "https://www.xilinx.com/bin/public/openDownload?filename=models.container.caffe.inception_v4_2019-12-2_10-22.zip",
@@ -43,14 +43,23 @@ models = [
    "https://www.xilinx.com/bin/public/openDownload?filename=models.container.caffe.squeezenet_2019-05-02_12_32.zip",
    "https://www.xilinx.com/bin/public/openDownload?filename=models.container.caffe.vgg16_2019-05-02_12_32.zip",
    "https://www.xilinx.com/bin/public/openDownload?filename=models.container.caffe.inception_v2_ssd_2019-05-06_0765.zip",
-   "https://www.xilinx.com/bin/public/openDownload?filename=FPN_CityScapes.zip",
-   "https://www.xilinx.com/bin/public/openDownload?filename=maps_BtoA.zip",
-   "https://www.xilinx.com/bin/public/openDownload?filename=maps_AtoB.zip",
-   "https://www.xilinx.com/bin/public/openDownload?filename=cityscapes_BtoA.zip",
-   "https://www.xilinx.com/bin/public/openDownload?filename=cityscapes_AtoB.zip",
-   "https://www.xilinx.com/bin/public/openDownload?filename=facades_BtoA.zip",
-   "https://www.xilinx.com/bin/public/openDownload?filename=bw2color.zip",
-   
+]
+
+models_new = [
+   "https://www.xilinx.com/bin/public/openDownload?filename=U-Net.zip",
+   "https://www.xilinx.com/bin/public/openDownload?filename=FPN_CityScapes_1_2.zip",
+   "https://www.xilinx.com/bin/public/openDownload?filename=bw2color_1_2.zip",
+   "https://www.xilinx.com/bin/public/openDownload?filename=facades_BtoA_1_2.zip",
+   "https://www.xilinx.com/bin/public/openDownload?filename=maps_AtoB_1_2.zip",
+   "https://www.xilinx.com/bin/public/openDownload?filename=maps_BtoA_1_2.zip",
+   "https://www.xilinx.com/bin/public/openDownload?filename=cityscapes_AtoB_1_2.zip",
+   "https://www.xilinx.com/bin/public/openDownload?filename=cityscapes_BtoA_1_2.zip",
+]
+
+models_tar = [
+   "https://www.xilinx.com/bin/public/openDownload?filename=refinedet_pruned_0.8.tar.gz",
+   "https://www.xilinx.com/bin/public/openDownload?filename=refinedet_pruned_0.92.tar.gz",
+   "https://www.xilinx.com/bin/public/openDownload?filename=refinedet_pruned_0.96.tar.gz"
 ]
 
 # Where will we work
@@ -58,6 +67,7 @@ workDir = os.path.dirname(os.path.realpath(__file__)) + "/TEMP"
 
 # Where are we putting models
 modelsDir = os.path.dirname(os.path.realpath(__file__)) + "/models"
+
 
 try:
   os.makedirs(modelsDir)
@@ -87,5 +97,31 @@ for model in models:
       break
   subprocess.call(["mv",pathToParent,modelsDir])
   subprocess.call(["rm","-rf","temp.zip","models"])
+
+
+for model in models_new:
+  subprocess.call(["wget",model,"-O","temp.zip"])
+  subprocess.call(["unzip","-o","temp.zip"])
+  # Strip Unnecessary heirarchy
+  for Dir,SubDirs,Files in os.walk('.'):
+    print(Dir,SubDirs,Files)
+    if len(Files) > 0:
+      pathToParent = Dir
+#      break
+  subprocess.call(["mv",pathToParent,modelsDir])
+  subprocess.call(["rm","-rf","temp.zip","models"])
+  
+  
+for model in models_tar:
+  subprocess.call(["wget",model,"-O","temp.tar.gz"])
+  subprocess.call(["tar","-xvf","temp.tar.gz"])
+  # Strip Unnecessary heirarchy
+  for Dir,SubDirs,Files in os.walk("models"):
+    if len(Files) > 0:
+      pathToParent = Dir
+      break
+  subprocess.call(["mv",pathToParent,modelsDir])
+  subprocess.call(["rm","-rf","temp.tar.gz","models"])
+
 
 shutil.rmtree(workDir)
