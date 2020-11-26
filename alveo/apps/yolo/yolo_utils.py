@@ -20,7 +20,10 @@ import random
 import cv2
 import numpy as np
 import os
-from PIL import Image, ImageDraw, ImageFont
+try:
+  from PIL import Image, ImageDraw, ImageFont
+except ImportError:
+  print("WARNING : PIL is not installed in the environment, so drawing functions are not available")
 
 from vai.dpuv1.rt import xdnn, xdnn_io
 from vai.dpuv1.utils.postproc import yolo
@@ -36,15 +39,20 @@ def bias_selector(args):
     assert args['bias_file'], 'Custom network requires --bias_file to be provided'
     biases = np.loadtxt(args['bias_file']).astype(np.float32).flatten()
   else: # Standard networks
-    if 'tiny' in args['yolo_model']:
-      biases = yolo.tiny_yolov3_bias_coco
-    elif 'v3' in args['yolo_model']:
-      biases = yolo.yolov3_bias_coco
+    if 'v3' in args['yolo_model']:
+      if 'tiny' in args['yolo_model']:
+        biases = yolo.tiny_yolov3_bias_coco
+      else:
+        biases = yolo.yolov3_bias_coco
     elif 'v2' in args['yolo_model']:
-      if args['classes'] == 80:
-        biases = yolo.yolov2_bias_coco
-      elif args['classes'] == 20:
+      if 'voc' in args['yolo_model']:
         biases = yolo.yolov2_bias_voc
+      else:
+        biases = yolo.yolov2_bias_coco
+    else:
+      msg = """\nCouldn't find the right bias values for model : {}
+      Please pass the bias values as the argument, --bias bias.txt""".format('tiny')
+      assert(0), msg
 
   return biases
 
@@ -76,6 +84,10 @@ def yolo_parser_args(parser):
                       help='thresohold on probability threshold')
   parser.add_argument('--iouthresh', type=float, default=0.3,
                       help='thresohold on iouthresh across 2 candidate detections')
+  parser.add_argument('--mapiouthresh', type=float, default=0.5,
+                      help='for calculating mAP thresohold on iouthresh across 2 candidate detections')
+  parser.add_argument('--points', type=int, default=0, choices=[0,11,101],
+                      help='points 0 (AUC) for ImageNet, PascalVOC 2010-2012, your custom dataset `points 101` for MS COCO and `points 11` for PascalVOC 2007')
   parser.add_argument('--benchmarkmode', action='store_true',
                       help='bypass pre/post processing for benchmarking')
   parser.add_argument('--profile', action='store_true',
@@ -315,7 +327,7 @@ def generate_colors(classes):
 
     return colors
 
-def draw_boxes(iimage,bboxes,names,colors=[],outpath="out",fontpath="font",display=False):
+def draw_boxes(iimage,bboxes,names,colors=[],outpath="out",fontpath="",display=False):
 
     if os.path.isdir('./out') is False:
         os.makedirs('./out')
@@ -323,9 +335,6 @@ def draw_boxes(iimage,bboxes,names,colors=[],outpath="out",fontpath="font",displ
     image = Image.open(iimage)
     draw = ImageDraw.Draw(image)
     thickness = (image.size[0] + image.size[1]) // 300
-    font = ImageFont.truetype(fontpath + '/FiraMono-Medium.otf',15)
-    #font = ImageFont.truetype('font/FiraMono-Medium.otf',15)
-
 
 #    classidset = set()
 #    for j in range(len(bboxes)):
@@ -336,7 +345,7 @@ def draw_boxes(iimage,bboxes,names,colors=[],outpath="out",fontpath="font",displ
     for j in range(0, len(bboxes)):
         classid = bboxes[j]['classid']
         label   = '{} {:.2f}'.format(names[bboxes[j]['classid']],bboxes[j]['prob'])
-        labelsize = draw.textsize(label,font=font)
+        labelsize = draw.textsize(label,font=None)
         for k in range(thickness):
             draw.rectangle([bboxes[j]['ll']['x']+k, bboxes[j]['ll']['y']+k, bboxes[j]['ur']['x']+k, bboxes[j]['ur']['y']+k],outline=colors[classid])
         draw.rectangle([bboxes[j]['ll']['x'], bboxes[j]['ur']['y'], bboxes[j]['ll']['x']+2*thickness+labelsize[0], bboxes[j]['ur']['y']+thickness+labelsize[1]],fill=colors[classid],outline=colors[classid])
@@ -345,7 +354,7 @@ def draw_boxes(iimage,bboxes,names,colors=[],outpath="out",fontpath="font",displ
         classid = bboxes[j]['classid']
         label   = '{} {:.2f}'.format(names[bboxes[j]['classid']],bboxes[j]['prob'])
         labelsize = draw.textsize(label)
-        draw.text([bboxes[j]['ll']['x']+2*thickness, bboxes[j]['ur']['y']+thickness], label, font=font)
+        draw.text([bboxes[j]['ll']['x']+2*thickness, bboxes[j]['ur']['y']+thickness], label, font=None)
 
     del draw
 

@@ -1,9 +1,9 @@
 # Copyright 2019 Xilinx Inc.
-#
+# 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
-#
+# 
 #     http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
@@ -11,7 +11,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 import os, subprocess
 import shutil
 
@@ -22,6 +21,8 @@ models = [
   "https://www.xilinx.com/bin/public/openDownload?filename=models.container.tensorflow.resnet50_baseline.pb_2019-07-18.zip",
   "https://www.xilinx.com/bin/public/openDownload?filename=resnet_v1_101.zip",
   "https://www.xilinx.com/bin/public/openDownload?filename=resnet_v1_152.zip",
+  "https://www.xilinx.com/bin/public/openDownload?filename=vgg_16.zip",
+  "https://www.xilinx.com/bin/public/openDownload?filename=vgg_19.zip",
 ]
 
 # Where will we work
